@@ -1,0 +1,87 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\002ad44487b49477da7a0dea6267f49c\AndroidManifest.xml:17:1-22:12
+MERGED from [top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\XposedModuleMultidex-1.0.0.aar\6e6cd7aba57703e649a92287bc6af041\AndroidManifest.xml:2:1-11:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+	package
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:3:5-34
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:1-31:12
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:5:5-29:19
+	android:label
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:8:9-41
+	android:icon
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:7:9-45
+	android:allowBackup
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:9:9-40
+activity#com.android.reverse.client.MainActivity
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:10:9-18:20
+	android:label
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:12:13-45
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:11:13-67
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:16:27-74
+meta-data#xposedmodule
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:20:9-22:36
+	android:value
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:22:13-33
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:21:13-40
+meta-data#xposedminversion
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:23:9-25:34
+	android:value
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:25:13-31
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:24:13-44
+meta-data#xposeddescription
+ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:26:9-28:83
+	android:value
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:28:13-80
+	android:name
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml:27:13-45
+uses-sdk
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\002ad44487b49477da7a0dea6267f49c\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\002ad44487b49477da7a0dea6267f49c\AndroidManifest.xml:20:5-43
+MERGED from [top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\XposedModuleMultidex-1.0.0.aar\6e6cd7aba57703e649a92287bc6af041\AndroidManifest.xml:7:5-9:41
+MERGED from [top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0] C:\Users\jxht\.gradle\caches\transforms-1\files-1.1\XposedModuleMultidex-1.0.0.aar\6e6cd7aba57703e649a92287bc6af041\AndroidManifest.xml:7:5-9:41
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\AndroidManifest.xml

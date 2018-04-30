@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'com.ceabie.dexnkife'
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "com.android.reverse"
+        minSdkVersion 8
+        targetSdkVersion 18
+
+        versionCode 1
+        versionName "1.0.0"
+
+        multiDexEnabled true
+
+        multiDexKeepProguard file('maindexlist.pro') // 指定主dex中的class
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:support-v4:18.0.0'
+    implementation files('libs/antlr-3.5.2-complete.jar')
+    implementation files('libs/commons-cli-1.2.jar')
+    implementation files('lib/full_framework_15.jar')
+    implementation files('libs/guava-17.0.jar')
+    compileOnly files('lib/XposedBridgeApi-54.jar')
+    implementation 'top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0'
+}

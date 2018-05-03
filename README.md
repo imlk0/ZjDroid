@@ -29,7 +29,7 @@ adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '
 ```
 4.Dump指定DEX内存中的数据并保存到文件（数据为odex格式，可在pc上反编译）。
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_dex","mCookie":"*****"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_dexfile","mCookie":"*****"}'
 ```
 5.Dump指定内存空间区域数据到文件。
 ```

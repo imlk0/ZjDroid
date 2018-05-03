@@ -17,32 +17,32 @@
 
 1.获取APK当前加载DEX文件信息：
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"dump_dexinfo"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_dexinfo"}'
 ```
 2.获取指定mCookie对应的DEX文件包含的可加载类名：
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"dump_class","mCookie":"*****"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_class","mCookie":"*****"}'
 ```
 3.根据Dalvik相关内存指针动态反编译指定DEX，并以文件形式保存。
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"backsmali","mCookie":"*****"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"backsmali","mCookie":"*****"}'
 ```
 4.Dump指定DEX内存中的数据并保存到文件（数据为odex格式，可在pc上反编译）。
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"dump_dex","mCookie":"*****"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_dex","mCookie":"*****"}'
 ```
 5.Dump指定内存空间区域数据到文件。
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"dump_mem","start":1234567,"length":123}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_mem","start":1234567,"length":123}'
 ```
 6.Dump Dalvik堆栈信息到文件，文件可以通过java heap分析工具分析处理。
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"dump_heap"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_heap"}'
 ```
 7.运行时动态调用Lua脚本 该功能可以通过Lua脚本动态调用java代码。 使用场景： 可以动态调用解密函数，完成解密。 可以动态触发特定逻辑。
 luajava相关使用方法： http://www.keplerproject.org/luajava/
 ```
-adb shell am broadcast -a com.zjdroid.invoke --ei <target-pid> --es cmd '{"action":"invoke","filepath":"****"}'
+adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"invoke","filepath":"****"}'
 ```
 8.敏感API调用自动监控
 

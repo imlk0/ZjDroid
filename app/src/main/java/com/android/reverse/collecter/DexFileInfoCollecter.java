@@ -1,5 +1,6 @@
 package com.android.reverse.collecter;
 
+import android.os.Build;
 import android.util.Log;
 
 import java.io.File;
@@ -48,85 +49,142 @@ public class DexFileInfoCollecter {
 
 
 //        private static native java.lang.Object dalvik.system.DexFile.openDexFileNative(java.lang.String,java.lang.String,int,java.lang.ClassLoader,dalvik.system.DexPathList$Element[])
-//        Method openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
-//                String.class, String.class, int.class, ClassLoader.class, Class.forName("[Ldalvik.system.DexPathList$Element;"));
 
+        if (Build.VERSION.SDK_INT > 22) {
 
-        Method openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
-                String.class, String.class, int.class);
-        hookhelper.hookMethod(openDexFileNativeMethod, new MethodHookCallBack() {
+            Method art_23_openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
+                    String.class, String.class, int.class, ClassLoader.class, Class.forName("[Ldalvik.system.DexPathList$Element;"));
 
-            @Override
-            public void beforeHookedMethod(HookParam param) {
+            hookhelper.hookMethod(art_23_openDexFileNativeMethod, new MethodHookCallBack() {
+                @Override
+                public void beforeHookedMethod(HookParam param) {
 
-            }
+                }
 
-            @Override
-            public void afterHookedMethod(HookParam param) {
-                String dexPath = (String) param.args[0];
-                Object mCookie = param.getResult();
+                @Override
+                public void afterHookedMethod(HookParam param) {
 
-                if (mCookie instanceof long[]) {
+                    String dexPath = (String) param.args[0];
+                    Object mCookie = param.getResult();
+
                     long[] longs = (long[]) mCookie;
 
 //						constexpr size_t kOatFileIndex = 0;
 //						constexpr size_t kDexFileIndexStart = 1;
 
                     for (int index = 1; index < longs.length; ++index) {
-
                         if (longs[index] != 0) {
                             dynLoadedDexInfo.put(mCookie + "", new DexFileInfo(dexPath, longs[index]));
                         }
                         Logger.log("openDexFileNative() is invoked with filepath:" + param.args[0] + " result: long[" + index + "]" + longs[index]);
 
                     }
-                } else {
+
+
+                }
+            });
+
+
+        } else {
+
+            Method openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
+                    String.class, String.class, int.class);
+
+            hookhelper.hookMethod(openDexFileNativeMethod, new MethodHookCallBack() {
+
+                @Override
+                public void beforeHookedMethod(HookParam param) {
+
+                }
+
+                @Override
+                public void afterHookedMethod(HookParam param) {
+                    String dexPath = (String) param.args[0];
+                    Object mCookie = param.getResult();
+
                     //long or int
 
                     if (Long.parseLong(mCookie.toString()) != 0) {
                         dynLoadedDexInfo.put(mCookie + "", new DexFileInfo(dexPath, Long.parseLong(mCookie.toString())));
                     }
                     Logger.log("openDexFileNative() is invoked with filepath:" + param.args[0] + " result:" + Long.parseLong(mCookie.toString()));
+
+                }
+            });
+
+        }
+
+
+        if (Build.VERSION.SDK_INT > 22) {
+
+//            private static native Class defineClassNative(String name, ClassLoader loader, Object cookie,DexFile dexFile)
+
+
+            Method art_23_defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                    String.class, ClassLoader.class, Object.class, DexFile.class);
+            hookhelper.hookMethod(art_23_defineClassNativeMethod, new MethodHookCallBack() {
+
+                @Override
+                public void beforeHookedMethod(HookParam param) {
+
                 }
 
-            }
-        });
-
-        Method defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
-                String.class, ClassLoader.class, int.class);
-        hookhelper.hookMethod(defineClassNativeMethod, new MethodHookCallBack() {
-
-            @Override
-            public void beforeHookedMethod(HookParam param) {
-
-            }
-
-            @Override
-            public void afterHookedMethod(HookParam param) {
-                if (!param.hasThrowable()) {
-                    int mCookie = (Integer) param.args[2];
-                    setDefineClassLoader(mCookie, (ClassLoader) param.args[1]);
+                @Override
+                public void afterHookedMethod(HookParam param) {
+                    if (!param.hasThrowable()) {
+                        long[] longs = (long[]) param.args[2];
+                        for (int index = 1; index < longs.length; ++index) {
+                            if (longs[index] != 0) {
+                                setDefineClassLoader(longs[index], (ClassLoader) param.args[1]);
+                            }
+                        }
+                    }
                 }
-            }
-        });
+            });
 
-        Method findLibraryMethod = RefInvoke.findMethodExact("dalvik.system.BaseDexClassLoader", ClassLoader.getSystemClassLoader(), "findLibrary",
-                String.class);
-        hookhelper.hookMethod(findLibraryMethod, new MethodHookCallBack() {
+        } else if (Build.VERSION.SDK_INT > 19) {
 
-            @Override
-            public void beforeHookedMethod(HookParam param) {
+            Method art_20_defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                    String.class, ClassLoader.class, long.class);
+            hookhelper.hookMethod(art_20_defineClassNativeMethod, new MethodHookCallBack() {
 
-            }
+                @Override
+                public void beforeHookedMethod(HookParam param) {
 
-            @Override
-            public void afterHookedMethod(HookParam param) {
-                Logger.log((String) param.args[0]);
-                if (DVMLIB_LIB.equals(param.args[0]) && param.getResult() == null) {
-                    param.setResult("/data/data/com.android.reverse/lib/libdvmnative.so");
                 }
-            }
-        });
+
+                @Override
+                public void afterHookedMethod(HookParam param) {
+                    if (!param.hasThrowable()) {
+                        long mCookie = (long) param.args[2];
+                        setDefineClassLoader(mCookie, (ClassLoader) param.args[1]);
+                    }
+                }
+            });
+
+        } else {
+
+
+            Method defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                    String.class, ClassLoader.class, int.class);
+            hookhelper.hookMethod(defineClassNativeMethod, new MethodHookCallBack() {
+
+                @Override
+                public void beforeHookedMethod(HookParam param) {
+
+                }
+
+                @Override
+                public void afterHookedMethod(HookParam param) {
+                    if (!param.hasThrowable()) {
+                        int mCookie = (Integer) param.args[2];
+                        setDefineClassLoader(mCookie, (ClassLoader) param.args[1]);
+                    }
+                }
+            });
+        }
+
+
     }
 
     public HashMap<String, DexFileInfo> dumpDexFileInfo() {
@@ -248,7 +306,7 @@ public class DexFileInfoCollecter {
 
     }
 
-    private void setDefineClassLoader(int mCookie, ClassLoader classLoader) {
+    private void setDefineClassLoader(long mCookie, ClassLoader classLoader) {
         Iterator<DexFileInfo> dexinfos = dynLoadedDexInfo.values().iterator();
         DexFileInfo info = null;
         while (dexinfos.hasNext()) {

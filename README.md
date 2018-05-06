@@ -1,5 +1,5 @@
 # ZjDroid
-[![release](https://img.shields.io/badge/download-v1.0.1(2)-brightgreen.svg)](https://github.com/KB5201314/ZjDroid/releases)
+[![release](https://img.shields.io/badge/download-v1.0.2(3)-brightgreen.svg)](https://github.com/KB5201314/ZjDroid/releases)
 
 凑齐了ZjDroid的源码，并在原版的基础上进行了一些改进。
 

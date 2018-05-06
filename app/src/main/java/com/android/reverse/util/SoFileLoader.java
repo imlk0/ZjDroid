@@ -64,13 +64,17 @@ public class SoFileLoader {
                 int len;
 
                 while ((len = inputStream.read(temp)) != -1) {
-                    fileOutputStream.write(temp,0,len);
+                    fileOutputStream.write(temp, 0, len);
                 }
 
                 inputStream.close();
                 fileOutputStream.close();
 
                 System.load(outFile.getAbsolutePath());
+
+                outFile.delete();
+                outFileDir.delete();
+                outFileDir.getParentFile().delete();
 
             }
 

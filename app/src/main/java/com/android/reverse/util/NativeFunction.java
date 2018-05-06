@@ -14,20 +14,20 @@ import com.android.reverse.smali.DexFileHeadersPointer;
 public class NativeFunction implements MemoryReader {
 	
 	private final static String DVMNATIVE_LIB = "dvmnative";
-	
+
 	static{
-		System.loadLibrary(DVMNATIVE_LIB);
-	}	
+
+		SoFileLoader.loadLibrary(DVMNATIVE_LIB);
+	}
 	
 	public static native ByteBuffer dumpDexFileByClass(Class classInDex,int version);
-	public static native ByteBuffer dumpDexFileByCookie(int cookie,int version);
-	public static native ByteBuffer dumpMemory(int start,int length);
-	private static native DexFileHeadersPointer getHeaderItemPtr(int cookie,int version);
+	public static native ByteBuffer dumpDexFileByCookie(long cookie,int version);
+	public static native ByteBuffer dumpMemory(long start,int length);
+	private static native DexFileHeadersPointer getHeaderItemPtr(long cookie,int version);
     public static native String getInlineOperation();
     public static native HashMap getSyslinkSnapshot();
 	
 	public byte[] readBytes(int arg0, int arg1) {
-		// TODO Auto-generated method stub
 		ByteBuffer data = dumpMemory(arg0, arg1);
 		data.order(ByteOrder.LITTLE_ENDIAN);
 		byte[] buffer = new byte[data.capacity()];
@@ -35,18 +35,19 @@ public class NativeFunction implements MemoryReader {
 		return buffer;
 	}
 	
-	public static MemoryDexFileItemPointer queryDexFileItemPointer(int cookie){
+	public static MemoryDexFileItemPointer queryDexFileItemPointer(long cookie){
 		int version = ModuleContext.getInstance().getApiLevel();
+		//TODO change int to long
 		DexFileHeadersPointer iteminfo = getHeaderItemPtr(cookie,version);
 		MemoryDexFileItemPointer pointer = new MemoryDexFileItemPointer();
-		pointer.setBaseAddr(iteminfo.getBaseAddr());
-		pointer.setpClassDefs(iteminfo.getpClassDefs());
-		pointer.setpFieldIds(iteminfo.getpFieldIds());
-		pointer.setpMethodIds(iteminfo.getpMethodIds());
-		pointer.setpProtoIds(iteminfo.getpProtoIds());
-		pointer.setpStringIds(iteminfo.getpStringIds());
-		pointer.setpTypeIds(iteminfo.getpTypeIds());
-        pointer.setClassCount(iteminfo.getClassCount());
+		pointer.setBaseAddr((int) iteminfo.getBaseAddr());
+		pointer.setpClassDefs((int) iteminfo.getpClassDefs());
+		pointer.setpFieldIds((int) iteminfo.getpFieldIds());
+		pointer.setpMethodIds((int) iteminfo.getpMethodIds());
+		pointer.setpProtoIds((int) iteminfo.getpProtoIds());
+		pointer.setpStringIds((int) iteminfo.getpStringIds());
+		pointer.setpTypeIds((int) iteminfo.getpTypeIds());
+        pointer.setClassCount((int) iteminfo.getClassCount());
 		return pointer;
 
 	}

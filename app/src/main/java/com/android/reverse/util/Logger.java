@@ -11,12 +11,12 @@ public class Logger {
 	
 	public static void log(String message){
 		if(DEBUG_ENABLE)
-			Log.d(LOGTAG_COMMAN+PACKAGENAME,message);
+			Log.e(LOGTAG_COMMAN+PACKAGENAME,message);
 	}
 	
 	public static void log_behavior(String message){
 		if(DEBUG_ENABLE)
-			Log.d(LOGTAG_WORKFLOW+PACKAGENAME,message);
+			Log.e(LOGTAG_WORKFLOW+PACKAGENAME,message);
 	}
 	
 }

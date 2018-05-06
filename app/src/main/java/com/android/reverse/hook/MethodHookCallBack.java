@@ -6,7 +6,6 @@ public abstract class MethodHookCallBack extends XC_MethodHook {
 	
 	@Override
 	protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-		// TODO Auto-generated method stub
 		super.beforeHookedMethod(param);
 		HookParam hookParam = HookParam.fromXposed(param);
 		this.beforeHookedMethod(hookParam);
@@ -16,7 +15,6 @@ public abstract class MethodHookCallBack extends XC_MethodHook {
 
 	@Override
 	protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-		// TODO Auto-generated method stub
 		super.afterHookedMethod(param);
 		HookParam hookParam = HookParam.fromXposed(param);
 		this.afterHookedMethod(hookParam);

@@ -8,7 +8,6 @@ public abstract class AbstractBahaviorHookCallBack extends MethodHookCallBack {
 
 	@Override
 	public void beforeHookedMethod(HookParam param) {
-		// TODO Auto-generated method stub
 		Logger.log_behavior("Invoke "+ param.method.getDeclaringClass().getName()+"->"+param.method.getName());
 		this.descParam(param);
 		//this.printStackInfo();
@@ -16,7 +15,6 @@ public abstract class AbstractBahaviorHookCallBack extends MethodHookCallBack {
 
 	@Override
 	public void afterHookedMethod(HookParam param) {
-		// TODO Auto-generated method stub
 		//Logger.log_behavior("End Invoke "+ param.method.toString());
 	}
 	

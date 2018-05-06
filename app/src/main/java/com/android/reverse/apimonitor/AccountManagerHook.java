@@ -19,7 +19,6 @@ public class AccountManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Get Account ->");
 			}
 		});	
@@ -31,7 +30,6 @@ public class AccountManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				String type = (String) param.args[0];
 				Logger.log_behavior("Get Account By Type ->");
 				Logger.log_behavior("type :" +type);

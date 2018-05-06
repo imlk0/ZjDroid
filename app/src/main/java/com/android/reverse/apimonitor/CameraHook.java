@@ -14,7 +14,6 @@ public class CameraHook extends ApiMonitorHook {
 
 	@Override
 	public void startHook() {
-		// TODO Auto-generated method stub
 		Method takePictureMethod = RefInvoke.findMethodExact(
 				"android.hardware.Camera", ClassLoader.getSystemClassLoader(),
 				"takePicture",ShutterCallback.class,PictureCallback.class,PictureCallback.class,PictureCallback.class);
@@ -22,7 +21,6 @@ public class CameraHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Camera take a picture->");
 			}
 		});
@@ -34,7 +32,6 @@ public class CameraHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Camera setPreview ->");
 			}
 		});
@@ -46,7 +43,6 @@ public class CameraHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Camera setPreview ->");
 			}
 		});
@@ -58,7 +54,6 @@ public class CameraHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Camera setPreview ->");
 			}
 		});

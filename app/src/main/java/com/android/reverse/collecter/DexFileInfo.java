@@ -3,22 +3,22 @@ package com.android.reverse.collecter;
 public class DexFileInfo {
 
     private String dexPath;
-    private int mCookie;
+    private long mCookie;
     private ClassLoader defineClassLoader;
     private String toStringResult;
 
-    public DexFileInfo(String dexPath, int mCookie) {
+    public DexFileInfo(String dexPath, long mCookie) {
         super();
         this.dexPath = dexPath;
         this.mCookie = mCookie;
     }
 
-    public DexFileInfo(String dexPath, int mCookie, String toStringResult) {
+    public DexFileInfo(String dexPath, long mCookie, String toStringResult) {
         this(dexPath,mCookie);
         this.toStringResult = toStringResult;
     }
 
-    public DexFileInfo(String dexPath, int mCookie, String toStringResult, ClassLoader classLoader) {
+    public DexFileInfo(String dexPath, long mCookie, String toStringResult, ClassLoader classLoader) {
         this(dexPath, mCookie, toStringResult);
         this.defineClassLoader = classLoader;
     }
@@ -27,7 +27,7 @@ public class DexFileInfo {
         return dexPath;
     }
 
-    public int getmCookie() {
+    public long getmCookie() {
         return mCookie;
     }
 

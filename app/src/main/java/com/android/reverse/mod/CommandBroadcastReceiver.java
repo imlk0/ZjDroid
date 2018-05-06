@@ -17,7 +17,6 @@ public class CommandBroadcastReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(final Context arg0, Intent arg1) {
-		// TODO Auto-generated method stub
 		if (INTENT_ACTION.equals(arg1.getAction())) {
 			try {
 				int pid = arg1.getIntExtra(TARGET_KEY, 0);
@@ -29,7 +28,6 @@ public class CommandBroadcastReceiver extends BroadcastReceiver {
 						new Thread(new Runnable() {
 							@Override
 							public void run() {
-								// TODO Auto-generated method stub
 								handler.doAction();
 							}
 						}).start();
@@ -38,7 +36,6 @@ public class CommandBroadcastReceiver extends BroadcastReceiver {
 					}
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

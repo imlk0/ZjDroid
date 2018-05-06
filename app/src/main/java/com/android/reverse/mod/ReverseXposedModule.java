@@ -24,6 +24,8 @@ public class ReverseXposedModule implements IXposedHookLoadPackage, IXposedHookZ
 
     public static String MODULE_PATH;
 
+    public static String APPINFO_DATA_DIR;//宿主app的data目录
+
 
     @Override
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
@@ -31,12 +33,12 @@ public class ReverseXposedModule implements IXposedHookLoadPackage, IXposedHookZ
 
         XMMultiDex.install(ReverseXposedModule.class.getClassLoader(),MODULE_PATH,lpparam.appInfo);
 
+        APPINFO_DATA_DIR = lpparam.appInfo.dataDir;
 
 //        addNativeLibDic();
 
 
 
-        // TODO Auto-generated method stub
         if (lpparam.appInfo == null ||
                 (lpparam.appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0) {
             return;

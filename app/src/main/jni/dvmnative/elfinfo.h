@@ -33,5 +33,5 @@ unsigned long find_sym_in_rel(struct elf_info *einfo, char *sym_name);
 void get_dyn_info(struct elf_info *einfo, struct dyn_info *dinfo);
 bool replace_all_rels(char* libpath, char *fucation_name, void *newFun_ptr);
 bool replace_certain_rels(char *libpath, char* fucation_name[], u4 newFun_ptr[], int size);
-
+char * readstr(int pid, unsigned long addr);
 #endif

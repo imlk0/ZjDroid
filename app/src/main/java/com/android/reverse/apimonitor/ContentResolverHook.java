@@ -141,7 +141,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					Logger.log_behavior("Read ContentProvider -> Uri = " + uri.toString());
@@ -158,7 +157,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					Logger.log_behavior("Register ContentProvider Change -> Uri = " + uri.toString());
@@ -173,7 +171,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					Logger.log_behavior("Insert ContentProvider -> Uri = " + uri.toString());
@@ -190,7 +187,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					ContentValues[] cv = (ContentValues[]) param.args[1];
@@ -210,7 +206,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					Logger.log_behavior("Delete ContentProvider -> uri= " + uri.toString());
@@ -227,7 +222,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				if (isSensitiveUri(uri)) {
 					Logger.log_behavior("Update ContentProvider -> uri=" + uri.toString());
@@ -243,7 +237,6 @@ public class ContentResolverHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				ArrayList<ContentProviderOperation> opts = (ArrayList<ContentProviderOperation>) param.args[1];
 				for(int i=0; i< opts.size(); i++){
 					Logger.log_behavior("Batch SQL = " + descContentProviderOperation(opts.get(i)));

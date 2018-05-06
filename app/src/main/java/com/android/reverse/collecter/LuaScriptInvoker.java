@@ -39,7 +39,6 @@ public class LuaScriptInvoker{
 
 			@Override
 			public void beforeHookedMethod(HookParam param) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -61,7 +60,6 @@ public class LuaScriptInvoker{
 			JavaFunction tostringfunction = new ToStringFunctionCallBack(luaState);
 			tostringfunction.register("tostring");
 		} catch (LuaException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

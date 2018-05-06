@@ -9,7 +9,6 @@ public class ActivityThreadHook extends ApiMonitorHook {
 
 	@Override
 	public void startHook() {
-		// TODO Auto-generated method stub
 		try {
 			Class receiverDataClass = Class.forName("android.app.ActivityThread$ReceiverData");
 			if (receiverDataClass != null) {
@@ -27,7 +26,6 @@ public class ActivityThreadHook extends ApiMonitorHook {
 				});
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -19,8 +19,7 @@ public class MediaRecorderHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
-				Logger.log_behavior("Media Record: Start ->");			
+				Logger.log_behavior("Media Record: Start ->");
 				String mPath = (String)RefInvoke.getFieldOjbect("android.media.MediaRecorder", param.thisObject, "mPath");
 				if(mPath != null)
 				   Logger.log_behavior("Save Path: ->" +mPath);
@@ -38,8 +37,7 @@ public class MediaRecorderHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
-				Logger.log_behavior("Media Record: Stop ->");			
+				Logger.log_behavior("Media Record: Stop ->");
 			}
 		});
 		

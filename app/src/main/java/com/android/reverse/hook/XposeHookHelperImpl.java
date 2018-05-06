@@ -9,7 +9,6 @@ public class XposeHookHelperImpl implements HookHelperInterface {
 
 	@Override
 	public void hookMethod(Member method, MethodHookCallBack callback) {
-		// TODO Auto-generated method stub
 		XposedBridge.hookMethod(method, callback);
 	}
 

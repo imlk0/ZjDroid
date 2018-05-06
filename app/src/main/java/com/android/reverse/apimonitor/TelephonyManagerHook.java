@@ -29,7 +29,6 @@ public class TelephonyManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Listen Telephone State Change ->");
 				Logger.log_behavior("PhoneStateListener ClassName = "+param.args[0].getClass().getName());
 				int event =  (Integer) param.args[1];

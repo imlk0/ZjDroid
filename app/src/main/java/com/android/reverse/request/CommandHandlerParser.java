@@ -21,7 +21,7 @@ public class CommandHandlerParser {
 	private static String PARAM_MCOOKIE_DUMP_DEXFILE = "mCookie";
 
 	private static String ACTION_DUMP_MEMERY = "dump_mem";
-	private static String PARAM_START_DUMP_MEMERY = "startaddr";
+	private static String PARAM_START_DUMP_MEMERY = "start";
 	private static String PARAM_LENGTH_DUMP_MEMERY = "length";
 
 	private static String ACTION_INVOKE_SCRIPT = "invoke";
@@ -36,22 +36,22 @@ public class CommandHandlerParser {
 			if (ACTION_DUMP_DEXINFO.equals(action)) {
 				handler = new DumpDexInfoCommandHandler();
 			} else if (ACTION_DUMP_DEXFILE.equals(action)) {
-				if (jsoncmd.has(PARAM_MCOOKIE_DUMPDEXCLASS)) {
-					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMPDEXCLASS);
+				if (jsoncmd.has(PARAM_MCOOKIE_DUMP_DEXFILE)) {
+					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMP_DEXFILE);
 					handler = new DumpDexFileCommandHandler(mCookie);
 				} else {
-					Logger.log("please set the " + PARAM_MCOOKIE_DUMPDEXCLASS + " value");
+					Logger.log("please set the " + PARAM_MCOOKIE_DUMP_DEXFILE + " value");
 				}
 			} else if (ACTION_BACKSMALI_DEXFILE.equals(action)) {
-				if (jsoncmd.has(PARAM_MCOOKIE_DUMPDEXCLASS)) {
-					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMPDEXCLASS);
+				if (jsoncmd.has(PARAM_MCOOKIE_DUMP_DEXFILE)) {
+					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMP_DEXFILE);
 					handler = new BackSmaliCommandHandler(mCookie);
 				} else {
-					Logger.log("please set the " + PARAM_MCOOKIE_DUMPDEXCLASS + " value");
+					Logger.log("please set the " + PARAM_MCOOKIE_DUMP_DEXFILE + " value");
 				}
 			} else if (ACTION_DUMP_DEXCLASS.equals(action)) {
 				if (jsoncmd.has(PARAM_MCOOKIE_DUMPDEXCLASS)) {
-					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMP_DEXFILE);
+					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMPDEXCLASS);
 					handler = new DumpClassCommandHandler(mCookie);
 				} else {
 					Logger.log("please set the " + PARAM_MCOOKIE_DUMPDEXCLASS + " value");
@@ -67,14 +67,13 @@ public class CommandHandlerParser {
 				}
 
 			} else if (ACTION_DUMP_MEMERY.equals(action)) {
-				int start = jsoncmd.getInt(PARAM_START_DUMP_MEMERY);
+				long start = jsoncmd.getLong(PARAM_START_DUMP_MEMERY);
 				int length = jsoncmd.getInt(PARAM_LENGTH_DUMP_MEMERY);
 				handler = new DumpMemCommandHandler(start, length);
 			} else {
 				Logger.log(action + " cmd is invalid! ");
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return handler;

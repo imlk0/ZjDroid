@@ -19,7 +19,6 @@ public class PackageManagerHook extends ApiMonitorHook {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				ComponentName cn = (ComponentName) param.args[0];
 				int newState = (Integer) param.args[1];
 				Logger.log_behavior("Set ComponentEnabled ->");
@@ -40,14 +39,12 @@ public class PackageManagerHook extends ApiMonitorHook {
 			installPackagemethod = RefInvoke.findMethodExact("android.app.ApplicationPackageManager", ClassLoader.getSystemClassLoader(),
 					"installPackage", Uri.class, Class.forName("android.content.pm.IPackageInstallObserver"), int.class, String.class);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		hookhelper.hookMethod(installPackagemethod, new AbstractBahaviorHookCallBack() {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Uri uri = (Uri) param.args[0];
 				Logger.log_behavior("Slient Install APK ->");
 				Logger.log_behavior("The APK URL = " + uri.toString());
@@ -59,14 +56,12 @@ public class PackageManagerHook extends ApiMonitorHook {
 			deletePackagemethod = RefInvoke.findMethodExact("android.app.ApplicationPackageManager", ClassLoader.getSystemClassLoader(),
 					"deletePackage", String.class, Class.forName("android.content.pm.IPackageDeleteObserver"), int.class);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		hookhelper.hookMethod(deletePackagemethod, new AbstractBahaviorHookCallBack() {
 
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				String packagename = (String) param.args[0];
 				Logger.log_behavior("Slient UnInstall APK ->");
 				Logger.log_behavior("The APK PackageName = " + packagename);
@@ -78,7 +73,6 @@ public class PackageManagerHook extends ApiMonitorHook {
 		hookhelper.hookMethod(getInstalledPackagesMethod, new AbstractBahaviorHookCallBack() {
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Query Installed Apps ->");
 			}
 		});

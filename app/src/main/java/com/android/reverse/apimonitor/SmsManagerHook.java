@@ -21,7 +21,6 @@ public class SmsManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Send SMS ->");
 				String dstNumber = (String)param.args[0];
 				String content = (String)param.args[2];
@@ -37,7 +36,6 @@ public class SmsManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Read SMS From Icc ->");
 			}
 		});
@@ -49,7 +47,6 @@ public class SmsManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Send Data SMS ->");
 				String dstNumber = (String)param.args[0];
 				short port = (Short)param.args[2];
@@ -67,7 +64,6 @@ public class SmsManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Send Multipart SMS ->");
 				String dstNumber = (String)param.args[0];
 				ArrayList<String> sms = (ArrayList<String>) param.args[2];

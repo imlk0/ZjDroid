@@ -15,12 +15,13 @@
 LOCAL_PATH := $(call my-dir)
 
 
+
 # elfinfo
 include $(CLEAR_VARS)
+LOCAL_CPP_EXTENSION := .cxx .cpp .cc
 
 LOCAL_MODULE    := elfinfo
-LOCAL_SRC_FILES := elfinfo.c
-
+LOCAL_SRC_FILES := C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\jni\dvmnative\elfinfo.cpp
 LOCAL_LDLIBS    := -ldl -llog
 
 include $(BUILD_STATIC_LIBRARY)
@@ -29,15 +30,11 @@ include $(BUILD_STATIC_LIBRARY)
 # dvmnative
 
 include $(CLEAR_VARS)
+LOCAL_CPP_EXTENSION := .cxx .cpp .cc
 
 LOCAL_MODULE    := dvmnative
 
-# 这个地方有毒，我调试了一下午，
-# 如果不加$(LOCAL_PATH)则将定位到jni/dvmnative.c
-# 加了则定位到jni/dvmnative/dvmnative.c
-# 而如果我不加$(LOCAL_PATH)，而把c文件名称换成idvmnative.c则定为到jni/dvmnative/idvmnative.c
-# 事实上我只在as里面遇到这个bug，我用ndk-build工具整得好好的，没毛病
-LOCAL_SRC_FILES := $(LOCAL_PATH)/dvmnative.c
+LOCAL_SRC_FILES := dvmnative.cpp
 LOCAL_STATIC_LIBRARIES := libelfinfo
 LOCAL_LDLIBS    := -ldl -llog
 

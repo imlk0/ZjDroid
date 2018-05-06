@@ -8,9 +8,10 @@
 [https://blog.csdn.net/u010746456/article/details/80150250](https://blog.csdn.net/u010746456/article/details/80150250)
 3. **增加dexinfo时显示mCookie**。
 4. dump时使用mCookie作为参数。
+5. **增加了对art虚拟机上dump dexfile的支持**
 
 # 局限
-1. **只能在dalvik虚拟机上使用（Android4.4及以下）**
+1. ~**只能在dalvik虚拟机上使用（Android4.4及以下）**~
 
 # 用法
 **除了将索引dex文件的方式改为用mCookie,在用法上基本和原版无差别**

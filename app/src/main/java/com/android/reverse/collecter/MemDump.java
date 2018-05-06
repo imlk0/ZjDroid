@@ -22,14 +22,13 @@ public class MemDump {
 			try {
 				out.write(buffer, 0, count);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
 	}
 
-	public static void dumpMem(String filepath, int start, int length) {
+	public static void dumpMem(String filepath, long start, int length) {
 		ByteBuffer buffer = NativeFunction.dumpMemory(start, length);
 		File file = new File(filepath);
 		if (!file.exists()) {
@@ -37,7 +36,6 @@ public class MemDump {
 				file.createNewFile();
 				file.setWritable(true);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -45,7 +43,6 @@ public class MemDump {
 		try {
 			saveByteBuffer(new FileOutputStream(file), buffer);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -18,7 +18,6 @@ public class RuntimeHook extends ApiMonitorHook {
 		hookhelper.hookMethod(execmethod, new AbstractBahaviorHookCallBack() {			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Create New Process ->");
 				String[] progs = (String[]) param.args[0];
 				for(int i=0 ;i <progs.length; i++){

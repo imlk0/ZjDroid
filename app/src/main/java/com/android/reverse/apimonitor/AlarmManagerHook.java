@@ -48,13 +48,10 @@ public class AlarmManagerHook extends ApiMonitorHook {
 			}
 			Logger.log_behavior("The Intent Action = "+intent.getAction());
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

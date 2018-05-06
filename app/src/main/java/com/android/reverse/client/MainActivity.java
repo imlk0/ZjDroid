@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
 			
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			((InvocationTargetException)e).getTargetException().printStackTrace();
 		}
 	}

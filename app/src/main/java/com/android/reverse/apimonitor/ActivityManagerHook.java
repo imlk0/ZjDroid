@@ -18,7 +18,6 @@ public class ActivityManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				String packageName = (String) param.args[0];
 				Logger.log_behavior("kill packagename = "+packageName);
 			}
@@ -31,7 +30,6 @@ public class ActivityManagerHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				String packageName = (String) param.args[0];
 				Logger.log_behavior("kill packagename = "+packageName);
 			}

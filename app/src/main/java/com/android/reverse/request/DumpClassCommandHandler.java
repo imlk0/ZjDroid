@@ -13,7 +13,6 @@ public class DumpClassCommandHandler implements CommandHandler {
 
 	@Override
 	public void doAction() {
-		// TODO Auto-generated method stub
 		String[] loadClass = DexFileInfoCollecter.getInstance().dumpLoadableClass(mCookie);
 		if (loadClass != null) {
 			Logger.log("Start Loadable ClassName ->");

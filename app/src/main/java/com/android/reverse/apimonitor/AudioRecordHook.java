@@ -9,7 +9,6 @@ public class AudioRecordHook extends ApiMonitorHook {
 
 	@Override
 	public void startHook() {
-		// TODO Auto-generated method stub
 		Method startRecordingMethod = RefInvoke.findMethodExact(
 				"android.media.AudioRecord", ClassLoader.getSystemClassLoader(),
 				"startRecording");
@@ -17,7 +16,6 @@ public class AudioRecordHook extends ApiMonitorHook {
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub
 				Logger.log_behavior("Audio Recording ->");
 			}
 		});

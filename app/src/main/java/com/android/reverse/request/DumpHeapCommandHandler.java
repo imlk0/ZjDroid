@@ -14,7 +14,6 @@ public class DumpHeapCommandHandler implements CommandHandler {
 
 	@Override
 	public void doAction() {
-		// TODO Auto-generated method stub
 		String heapfilePath =ModuleContext.getInstance().getAppContext().getFilesDir()+"/"+dumpFileName;
         HeapDump.dumpHeap(heapfilePath);
         Logger.log("the heap data save to ="+ heapfilePath);

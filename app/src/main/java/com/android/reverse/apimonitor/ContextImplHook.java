@@ -12,7 +12,6 @@ public class ContextImplHook extends ApiMonitorHook{
 	
 	@Override
 	public void startHook() {
-		// TODO Auto-generated method stub
 		Method registerReceivermethod = RefInvoke.findMethodExact(
 				"android.app.ContextImpl", ClassLoader.getSystemClassLoader(),
 				"registerReceiver", BroadcastReceiver.class,IntentFilter.class);
@@ -20,7 +19,6 @@ public class ContextImplHook extends ApiMonitorHook{
 			
 			@Override
 			public void descParam(HookParam param) {
-				// TODO Auto-generated method stub				
 				Logger.log_behavior("Register BroatcastReceiver");
 				Logger.log_behavior("The BroatcastReceiver ClassName = "+param.args[0].getClass().toString());
 				if(param.args[1] != null){

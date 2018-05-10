@@ -9,7 +9,7 @@
 详细原因请看我的文章：\
 [https://blog.csdn.net/u010746456/article/details/80150250](https://blog.csdn.net/u010746456/article/details/80150250)
 3. **增加dexinfo时显示mCookie**。
-4. dump时使用mCookie作为参数。
+4. **dump时使用mCookie作为参数。（dumpdex文件等操作都以mCookie这串数字作为唯一标识）**
 5. **增加了对art虚拟机上dump dexfile的支持**
 
 # 局限

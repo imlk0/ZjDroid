@@ -2,6 +2,7 @@ package com.android.reverse.util;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Process;
 
 import com.android.reverse.mod.ReverseXposedModule;
 
@@ -34,7 +35,7 @@ public class SoFileLoader {
 
 
             if (Build.VERSION.SDK_INT >= 21) {
-                soEntryPath = "lib" + "/" + Build.SUPPORTED_ABIS[0] + "/lib" + libName + ".so";
+                soEntryPath = "lib" + "/" + getSuitAbi() + "/lib" + libName + ".so";
             } else {
                 soEntryPath = "lib" + "/" + Build.CPU_ABI + "/lib" + libName + ".so";
             }
@@ -84,6 +85,15 @@ public class SoFileLoader {
             e.printStackTrace();
         }
 
+    }
+
+
+    public static String getSuitAbi() {
+        if (Process.is64Bit()) {
+            return Build.SUPPORTED_64_BIT_ABIS[0];
+        } else {
+            return Build.SUPPORTED_32_BIT_ABIS[0];
+        }
     }
 
 }

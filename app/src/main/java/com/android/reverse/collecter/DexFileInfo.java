@@ -31,7 +31,7 @@ public class DexFileInfo {
         return mCookie;
     }
 
-    public void setmCookie(int mCookie) {
+    public void setmCookie(long mCookie) {
         this.mCookie = mCookie;
     }
 

@@ -16,7 +16,7 @@ public class DumpDexFileCommandHandler implements CommandHandler {
     @Override
     public void doAction() {
         String filename = ModuleContext.getInstance().getAppContext().getFilesDir() + "/dexdump" + mCookie + ".odex";
-        DexFileInfoCollecter.getInstance().dumpDexFile(filename, mCookie);
+        DexFileInfoCollecter.getInstance().dumpDexFile(filename, Long.parseLong(mCookie));
         Logger.log("the dexfile data save to =" + filename);
     }
 

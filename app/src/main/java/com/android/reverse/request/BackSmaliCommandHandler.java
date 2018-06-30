@@ -17,7 +17,7 @@ public class BackSmaliCommandHandler implements CommandHandler {
     @Override
     public void doAction() {
 
-        if (Build.VERSION.SDK_INT > 19) {
+        if (Build.VERSION.SDK_INT >= 20) {
             //TODO 增加art虚拟机中backsmali的支持
             Logger.log("Forbidden ! in Art, ZjDroid was unable to back smali dex file automaticly!");
             return;

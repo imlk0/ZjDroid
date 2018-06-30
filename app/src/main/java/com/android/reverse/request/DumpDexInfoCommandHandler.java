@@ -10,7 +10,7 @@ public class DumpDexInfoCommandHandler implements CommandHandler {
 
 	@Override
 	public void doAction() {
-		HashMap<String, DexFileInfo> dexfileInfo = DexFileInfoCollecter.getInstance().dumpDexFileInfo();
+		HashMap<Long, DexFileInfo> dexfileInfo = DexFileInfoCollecter.getInstance().dumpDexFileInfo();
 		Iterator<DexFileInfo> itor = dexfileInfo.values().iterator();
 		DexFileInfo info = null;
 		Logger.log("The DexFile Infomation ->");

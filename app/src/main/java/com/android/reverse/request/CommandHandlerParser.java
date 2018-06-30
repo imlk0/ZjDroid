@@ -49,7 +49,7 @@ public class CommandHandlerParser {
 				} else {
 					Logger.log("please set the " + PARAM_MCOOKIE_DUMP_DEXFILE + " value");
 				}
-			} else if (ACTION_DUMP_DEXCLASS.equals(action)) {
+			} else if (ACTION_DUMP_DEXCLASS.equals(action)) {// TODO
 				if (jsoncmd.has(PARAM_MCOOKIE_DUMPDEXCLASS)) {
 					String mCookie = jsoncmd.getString(PARAM_MCOOKIE_DUMPDEXCLASS);
 					handler = new DumpClassCommandHandler(mCookie);

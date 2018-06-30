@@ -50,7 +50,7 @@ public class AlarmManagerHook extends ApiMonitorHook {
             });
 
 
-        } else if (Build.VERSION.SDK_INT > 19) {
+        } else if (Build.VERSION.SDK_INT >= 20) {
 
             Method setImplmethod = RefInvoke.findMethodExact(
                     "android.app.AlarmManager", ClassLoader.getSystemClassLoader(),

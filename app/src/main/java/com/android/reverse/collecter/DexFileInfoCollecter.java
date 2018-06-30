@@ -27,8 +27,8 @@ import dalvik.system.PathClassLoader;
 
 public class DexFileInfoCollecter {
 
-    private static PathClassLoader pathClassLoader;
-    private static HashMap<String, DexFileInfo> dynLoadedDexInfo = new HashMap<String, DexFileInfo>();
+    private static PathClassLoader pathClassLoader;// TODO 测试自定义Classloader的应用，如有热修复的QQ
+    private static HashMap<Long, DexFileInfo> dynLoadedDexInfo = new HashMap<Long, DexFileInfo>();
     private static DexFileInfoCollecter collecter;
     private HookHelperInterface hookhelper = HookHelperFacktory.getHookHelper();
     private final static String DVMLIB_LIB = "dvmnative";
@@ -48,82 +48,85 @@ public class DexFileInfoCollecter {
         pathClassLoader = (PathClassLoader) ModuleContext.getInstance().getBaseClassLoader();
 
 
-//        private static native java.lang.Object dalvik.system.DexFile.openDexFileNative(java.lang.String,java.lang.String,int,java.lang.ClassLoader,dalvik.system.DexPathList$Element[])
 
-        if (Build.VERSION.SDK_INT > 22) {
+        hookdefineClassNativeMethod();
+        hookOpenDexFileNativeMethod();
 
-            Method art_23_openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
-                    String.class, String.class, int.class, ClassLoader.class, Class.forName("[Ldalvik.system.DexPathList$Element;"));
-
-            hookhelper.hookMethod(art_23_openDexFileNativeMethod, new MethodHookCallBack() {
-                @Override
-                public void beforeHookedMethod(HookParam param) {
-
-                }
-
-                @Override
-                public void afterHookedMethod(HookParam param) {
-
-                    String dexPath = (String) param.args[0];
-                    Object mCookie = param.getResult();
-
-                    long[] longs = (long[]) mCookie;
-
-//						constexpr size_t kOatFileIndex = 0;
-//						constexpr size_t kDexFileIndexStart = 1;
-
-                    for (int index = 1; index < longs.length; ++index) {
-                        if (longs[index] != 0) {
-                            dynLoadedDexInfo.put(mCookie + "", new DexFileInfo(dexPath, longs[index]));
-                        }
-                        Logger.log("openDexFileNative() is invoked with filepath:" + param.args[0] + " result: long[" + index + "]" + longs[index]);
-
-                    }
+    }
 
 
-                }
-            });
+    public void hookdefineClassNativeMethod() {
+        Method defineClassNativeMethod;
 
+//            (Build.VERSION.SDK_INT >= 23)
+//            private static native Class defineClassNative(String name, ClassLoader loader, Object cookie,DexFile dexFile)
+        defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                String.class, ClassLoader.class, Object.class, DexFile.class);
 
-        } else {
-
-            Method openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
-                    String.class, String.class, int.class);
-
-            hookhelper.hookMethod(openDexFileNativeMethod, new MethodHookCallBack() {
-
-                @Override
-                public void beforeHookedMethod(HookParam param) {
-
-                }
-
-                @Override
-                public void afterHookedMethod(HookParam param) {
-                    String dexPath = (String) param.args[0];
-                    Object mCookie = param.getResult();
-
-                    //long or int
-
-                    if (Long.parseLong(mCookie.toString()) != 0) {
-                        dynLoadedDexInfo.put(mCookie + "", new DexFileInfo(dexPath, Long.parseLong(mCookie.toString())));
-                    }
-                    Logger.log("openDexFileNative() is invoked with filepath:" + param.args[0] + " result:" + Long.parseLong(mCookie.toString()));
-
-                }
-            });
-
+        if (defineClassNativeMethod == null) {
+//                (Build.VERSION.SDK_INT >= 20)
+            defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                    String.class, ClassLoader.class, long.class);
         }
 
+        if (defineClassNativeMethod == null) {
+//            dalvik
+            defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
+                    String.class, ClassLoader.class, int.class);
+        }
 
-        if (Build.VERSION.SDK_INT > 22) {
+        if(defineClassNativeMethod == null){
+            Logger.log("error at " + DexFileInfoCollecter.class.getName() + "#" + "hookOpenDexFileNativeMethod() :");
+            Logger.log("unable to find suit method to hook, may be the Zjdroid is too old");
+        }
 
-//            private static native Class defineClassNative(String name, ClassLoader loader, Object cookie,DexFile dexFile)
+        hookhelper.hookMethod(defineClassNativeMethod, new MethodHookCallBack() {
+            @Override
+            public void beforeHookedMethod(HookParam param) {
 
+            }
 
-            Method art_23_defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
-                    String.class, ClassLoader.class, Object.class, DexFile.class);
-            hookhelper.hookMethod(art_23_defineClassNativeMethod, new MethodHookCallBack() {
+            @Override
+            public void afterHookedMethod(HookParam param) {
+                if (!param.hasThrowable()) {
 
+                    long[] mCookies = parseMCookies(param.getResult());
+
+                    for (int index = 0; index < mCookies.length; ++index) {
+                        if (mCookies[index] != 0) {
+                            setDefineClassLoader(mCookies[index], (ClassLoader) param.args[1]);
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void hookOpenDexFileNativeMethod() {
+
+        Method openDexFileNativeMethod = null;
+
+        try {
+//          (Build.VERSION.SDK_INT >= 23) art
+//          private static native java.lang.Object dalvik.system.DexFile.openDexFileNative(java.lang.String,java.lang.String,int,java.lang.ClassLoader,dalvik.system.DexPathList$Element[])
+            openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
+                    String.class, String.class, int.class, ClassLoader.class, Class.forName("[Ldalvik.system.DexPathList$Element;"));
+        } catch (ClassNotFoundException e) {
+        }
+
+//        dalvik
+        if (openDexFileNativeMethod == null) {
+            openDexFileNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "openDexFileNative",
+                    String.class, String.class, int.class);
+        }
+
+        if (openDexFileNativeMethod == null) {
+            Logger.log("error at " + DexFileInfoCollecter.class.getName() + "#" + "hookOpenDexFileNativeMethod() :");
+            Logger.log("unable to find suit method to hook, may be the Zjdroid is too old");
+        } else {
+
+            hookhelper.hookMethod(openDexFileNativeMethod, new MethodHookCallBack() {
                 @Override
                 public void beforeHookedMethod(HookParam param) {
 
@@ -131,64 +134,54 @@ public class DexFileInfoCollecter {
 
                 @Override
                 public void afterHookedMethod(HookParam param) {
-                    if (!param.hasThrowable()) {
-                        long[] longs = (long[]) param.args[2];
-                        for (int index = 1; index < longs.length; ++index) {
-                            if (longs[index] != 0) {
-                                setDefineClassLoader(longs[index], (ClassLoader) param.args[1]);
+
+                    String dexPath = (String) param.args[0];
+
+                    long[] mCookies = parseMCookies(param.getResult());
+                    if (mCookies != null) {
+                        for (int index = 0; index < mCookies.length; ++index) {
+                            if (mCookies[index] != 0) {
+                                dynLoadedDexInfo.put(mCookies[index], new DexFileInfo(dexPath, mCookies[index]));
                             }
+                            Logger.log("openDexFileNative() is invoked with filepath:" + param.args[0] + " result: long[" + index + "]" + mCookies[index]);
                         }
                     }
                 }
             });
+        }
+    }
 
-        } else if (Build.VERSION.SDK_INT > 19) {
+    /**
+     * @param mCookies
+     * @return 所有可用的dexFile的mCookie
+     */
 
-            Method art_20_defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
-                    String.class, ClassLoader.class, long.class);
-            hookhelper.hookMethod(art_20_defineClassNativeMethod, new MethodHookCallBack() {
+    public static long[] parseMCookies(Object mCookies) {
 
-                @Override
-                public void beforeHookedMethod(HookParam param) {
-
-                }
-
-                @Override
-                public void afterHookedMethod(HookParam param) {
-                    if (!param.hasThrowable()) {
-                        long mCookie = (long) param.args[2];
-                        setDefineClassLoader(mCookie, (ClassLoader) param.args[1]);
-                    }
-                }
-            });
-
+        if (mCookies instanceof Integer) {
+            return new long[]{(Integer) mCookies};
+        } else if (mCookies instanceof Long) {
+            return new long[]{(Long) mCookies};
+        } else if (mCookies instanceof long[]) {
+            long[] cookies = ((long[]) mCookies);
+            long[] longs = new long[cookies.length - 1];
+//            sdk23开始的art虚拟机中，mCookie为long[],其中第一个为oatFile，余下的为(o)dexFile
+//            摘自源码：
+//            constexpr size_t kOatFileIndex = 0;
+//            constexpr size_t kDexFileIndexStart = 1;
+            System.arraycopy(cookies, 1, longs, 0, longs.length);
+            return longs;
         } else {
-
-
-            Method defineClassNativeMethod = RefInvoke.findMethodExact("dalvik.system.DexFile", ClassLoader.getSystemClassLoader(), "defineClassNative",
-                    String.class, ClassLoader.class, int.class);
-            hookhelper.hookMethod(defineClassNativeMethod, new MethodHookCallBack() {
-
-                @Override
-                public void beforeHookedMethod(HookParam param) {
-
-                }
-
-                @Override
-                public void afterHookedMethod(HookParam param) {
-                    if (!param.hasThrowable()) {
-                        int mCookie = (Integer) param.args[2];
-                        setDefineClassLoader(mCookie, (ClassLoader) param.args[1]);
-                    }
-                }
-            });
+            //没有满足的情况
+            Logger.log("bad mCookies at " + DexFileInfoCollecter.class.getName() + "#" + "parseMCookies(Object) :" + mCookies);
+            return null;
         }
 
 
     }
 
-    public HashMap<String, DexFileInfo> dumpDexFileInfo() {
-        HashMap<String, DexFileInfo> dexs = new HashMap<String, DexFileInfo>(dynLoadedDexInfo);
+    public HashMap<Long, DexFileInfo> dumpDexFileInfo() {
+        HashMap<Long, DexFileInfo> dexs = new HashMap<Long, DexFileInfo>(dynLoadedDexInfo);
         Object dexPathList = RefInvoke.getFieldOjbect("dalvik.system.BaseDexClassLoader", pathClassLoader, "pathList");
         Object[] dexElements = (Object[]) RefInvoke.getFieldOjbect("dalvik.system.DexPathList", dexPathList, "dexElements");
         DexFile dexFile = null;
@@ -196,23 +189,15 @@ public class DexFileInfoCollecter {
             dexFile = (DexFile) RefInvoke.getFieldOjbect("dalvik.system.DexPathList$Element", dexElements[i], "dexFile");
             String mFileName = (String) RefInvoke.getFieldOjbect("dalvik.system.DexFile", dexFile, "mFileName");
             Object mCookie = RefInvoke.getFieldOjbect("dalvik.system.DexFile", dexFile, "mCookie");
-            if (mCookie instanceof long[]) {
-                long[] longs = (long[]) mCookie;
 
-//						constexpr size_t kOatFileIndex = 0;
-//						constexpr size_t kDexFileIndexStart = 1;
+            long[] mCookies = parseMCookies(mCookie);
 
-                for (int index = 1; index < longs.length; ++index) {
-                    DexFileInfo dexinfo = new DexFileInfo(mFileName, longs[index], dexElements[i].toString(), pathClassLoader);
-                    dexs.put(longs[index] + "", dexinfo);
+            for (int index = 0; index < mCookies.length; ++index) {
+                if(mCookies[index] != 0){
+                    DexFileInfo dexinfo = new DexFileInfo(mFileName, mCookies[index], dexElements[i].toString(), pathClassLoader);
+                    dexs.put(mCookies[index], dexinfo);
                 }
-            } else {
-                //long or int
-                DexFileInfo dexinfo = new DexFileInfo(mFileName, Long.parseLong(mCookie.toString()), dexElements[i].toString(), pathClassLoader);
-//			dexs.put(mFileName, dexinfo);
-                dexs.put(mCookie + "", dexinfo);//改用
             }
-
         }
         return dexs;
     }
@@ -252,12 +237,11 @@ public class DexFileInfoCollecter {
         }
     }
 
-    public void dumpDexFile(String filename, String mCookie_str) {
+    public void dumpDexFile(String filename, long mCookie) {
         File file = new File(filename);
         try {
             if (!file.exists())
                 file.createNewFile();
-            long mCookie = Long.parseLong(mCookie_str);
 //			int mCookie = this.getCookie(dexPath);
             if (mCookie != 0) {
                 FileOutputStream out = new FileOutputStream(file);
@@ -284,6 +268,11 @@ public class DexFileInfoCollecter {
         }
     }
 
+    /**
+     * 已被废弃
+     * @param dexPath
+     * @return
+     */
     private Object getCookie(String dexPath) {
 
         if (dynLoadedDexInfo.containsKey(dexPath)) {

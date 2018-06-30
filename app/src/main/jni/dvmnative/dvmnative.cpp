@@ -492,7 +492,7 @@ static jobject dump_ClassObject_DvmDex_MemMap(JNIEnv *env, jclass obj, jclass ar
 
 static jobject
 dump_DexFile_mCookie_DexOrJar_memMap(JNIEnv *env, jclass obj, jlong cookie, jint version) {
-    if (version > 19) {// art
+    if (version >= 20) {// art
         art::DexFile *dexFile = (art::DexFile *) cookie;
 
         LOGV("the art_dexFile mCookie=%d", dexFile);
@@ -582,7 +582,7 @@ static jobject dump_Memory(JNIEnv *env, jclass obj, jlong start, jint length) {
 
 static jobject getHeaderItemPtr(JNIEnv *env, jclass obj, jlong mCookie, jint version) {
 
-    if (version > 19) {
+    if (version >= 20) {
         art::DexFile *pDexFile = (art::DexFile *) mCookie;
 
         long *head_ptr = (long *) &(pDexFile->begin_);

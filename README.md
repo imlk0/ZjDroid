@@ -12,8 +12,16 @@
 4. **dump时使用mCookie作为参数。（dumpdex文件等操作都以mCookie这串数字作为唯一标识）**
 5. **增加了对art虚拟机上dump dexfile的支持**
 
-# 局限
-1. ~**只能在dalvik虚拟机上使用（Android4.4及以下）**~
+# 局限（TODO）
+- [x] ~**只能在dalvik虚拟机上使用（Android4.4及以下）**~
+- [ ] [**非常有用的功能**] **监控应用敏感行为**模块 不支持高AndroidSDK版本的API，需要修复(简单但是繁琐)\
+相关类所在项目文件夹：\
+[https://github.com/KB5201314/ZjDroid/tree/master/app/src/main/java/com/android/reverse/apimonitor](https://github.com/KB5201314/ZjDroid/tree/master/app/src/main/java/com/android/reverse/apimonitor)
+- [ ] **动态反编译指定DEX**模块 由于使用的库版本过旧，不支持ART虚拟机，需要换用新版库，但是大部分接口已改，需要时间去学习新版库的使用
+- [ ] [**非常有用的功能**] 增加**反Xposed检测**
+- [ ] [**非常有用的功能**] 增加**反模拟器检测**
+- [ ] [**调试方便**] 增加**查找指定类所在的dex文件**
+- [ ] **支持hook多ClassLoader**
 
 # 用法
 **除了将索引dex文件的方式改为用mCookie,在用法上基本和原版无差别**

@@ -50,6 +50,10 @@ public class ReverseXposedModule implements IXposedHookLoadPackage, IXposedHookZ
             ModuleContext.getInstance().initModuleContext(pminfo);
             DexFileInfoCollecter.getInstance().start();
             LuaScriptInvoker.getInstance().start();
+
+
+            Logger.log_behavior("the package = " + lpparam.packageName + " has hook");
+            Logger.log_behavior("the app target id = " + android.os.Process.myPid());
             ApiMonitorHookManager.getInstance().startMonitor();
         } else {
 

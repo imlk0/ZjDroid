@@ -69,7 +69,7 @@ public class PackageManagerHook extends ApiMonitorHook {
 		});
 
 		Method getInstalledPackagesMethod = RefInvoke.findMethodExact("android.app.ApplicationPackageManager",
-				ClassLoader.getSystemClassLoader(), "getInstalledPackages", int.class, int.class);
+				ClassLoader.getSystemClassLoader(), "getInstalledPackages", int.class);
 		hookhelper.hookMethod(getInstalledPackagesMethod, new AbstractBahaviorHookCallBack() {
 			@Override
 			public void descParam(HookParam param) {

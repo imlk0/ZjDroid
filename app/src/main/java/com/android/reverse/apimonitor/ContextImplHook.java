@@ -27,6 +27,20 @@ public class ContextImplHook extends ApiMonitorHook{
 				}
 			}
 		});
+
+
+		Method unRegisterReceivermethod = RefInvoke.findMethodExact(
+				"android.app.ContextImpl", ClassLoader.getSystemClassLoader(),
+				"unregisterReceiver", BroadcastReceiver.class);
+		hookhelper.hookMethod(unRegisterReceivermethod, new AbstractBahaviorHookCallBack() {
+
+			@Override
+			public void descParam(HookParam param) {
+				Logger.log_behavior("UnRegister BroatcastReceiver");
+				Logger.log_behavior("The BroatcastReceiver ClassName = "+param.args[0].getClass().toString());
+			}
+		});
+
 	}
 	
 	public String descIntentFilter(IntentFilter intentFilter){

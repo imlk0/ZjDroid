@@ -30,6 +30,12 @@
 ```
 adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_dexinfo"}'
 ```
+    结果示例：
+    06-30 21:22:59.211 20298 23084 E zjdroid-shell-com.browser2345: filepath:/data/app/com.browser2345-1/base.apk dexElementToString:dex file "/data/app/com.browser2345-1/base.apk" mCookie:3013523232
+    分3个部分：filepath 文件路径
+              dexElementToString 文件路径及相关信息（描述这是个dex文件还是zip文件）
+              mCookie 关键参数，后面用到
+
 2.获取指定mCookie对应的DEX文件包含的可加载类名：
 ```
 adb shell am broadcast -a com.zjdroid.invoke --ei target <target-pid> --es cmd '{"action":"dump_class","mCookie":"*****"}'

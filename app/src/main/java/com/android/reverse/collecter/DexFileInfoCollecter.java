@@ -48,7 +48,6 @@ public class DexFileInfoCollecter {
         pathClassLoader = (PathClassLoader) ModuleContext.getInstance().getBaseClassLoader();
 
 
-
         hookdefineClassNativeMethod();
         hookOpenDexFileNativeMethod();
 
@@ -75,7 +74,7 @@ public class DexFileInfoCollecter {
                     String.class, ClassLoader.class, int.class);
         }
 
-        if(defineClassNativeMethod == null){
+        if (defineClassNativeMethod == null) {
             Logger.log("error at " + DexFileInfoCollecter.class.getName() + "#" + "hookOpenDexFileNativeMethod() :");
             Logger.log("unable to find suit method to hook, may be the Zjdroid is too old");
         }
@@ -90,15 +89,17 @@ public class DexFileInfoCollecter {
             public void afterHookedMethod(HookParam param) {
                 if (!param.hasThrowable()) {
 
-                    long[] mCookies = parseMCookies(param.getResult());
-
-                    for (int index = 0; index < mCookies.length; ++index) {
-                        if (mCookies[index] != 0) {
-                            setDefineClassLoader(mCookies[index], (ClassLoader) param.args[1]);
+                    long[] mCookies = parseMCookies(param.args[2]);
+                    if (mCookies != null) {
+                        for (int index = 0; index < mCookies.length; ++index) {
+                            if (mCookies[index] != 0) {
+                                setDefineClassLoader(mCookies[index], (ClassLoader) param.args[1]);
+                            }
                         }
                     }
                 }
             }
+
         });
 
     }
@@ -191,11 +192,13 @@ public class DexFileInfoCollecter {
             Object mCookie = RefInvoke.getFieldOjbect("dalvik.system.DexFile", dexFile, "mCookie");
 
             long[] mCookies = parseMCookies(mCookie);
+            if (mCookies != null) {
 
-            for (int index = 0; index < mCookies.length; ++index) {
-                if(mCookies[index] != 0){
-                    DexFileInfo dexinfo = new DexFileInfo(mFileName, mCookies[index], dexElements[i].toString(), pathClassLoader);
-                    dexs.put(mCookies[index], dexinfo);
+                for (int index = 0; index < mCookies.length; ++index) {
+                    if (mCookies[index] != 0) {
+                        DexFileInfo dexinfo = new DexFileInfo(mFileName, mCookies[index], dexElements[i].toString(), pathClassLoader);
+                        dexs.put(mCookies[index], dexinfo);
+                    }
                 }
             }
         }
@@ -270,6 +273,7 @@ public class DexFileInfoCollecter {
 
     /**
      * 已被废弃
+     *
      * @param dexPath
      * @return
      */

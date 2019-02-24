@@ -21,7 +21,7 @@ include $(CLEAR_VARS)
 LOCAL_CPP_EXTENSION := .cxx .cpp .cc
 
 LOCAL_MODULE    := elfinfo
-LOCAL_SRC_FILES := C:\Users\jxht\AndroidStudioProjects\ZjDroid\app\src\main\jni\dvmnative\elfinfo.cpp
+LOCAL_SRC_FILES := $(LOCAL_PATH)/elfinfo.cpp
 LOCAL_LDLIBS    := -ldl -llog
 
 include $(BUILD_STATIC_LIBRARY)
